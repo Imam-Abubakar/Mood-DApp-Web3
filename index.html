@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="shortcut icon" class="far fa-meh-blank" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mood DApp</title>
+  
+    <style>
+             /* Google Font Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins" , sans-serif;
+}
+body{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1ba7e3;
+  padding: 30px;
+}
+.container{
+  position: relative;
+  max-width: 850px;
+  width: 100%;
+  background: #fff;
+  padding: 70px 30px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  perspective: 2700px;
+}
+
+.container .cover{
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: 50%;
+  z-index: 98;
+  transition: all 1s ease;
+  transform-origin: left;
+  transform-style: preserve-3d;
+}
+.container #flip:checked ~ .cover{
+  transform: rotateY(-180deg);
+}
+ .container .cover .front,
+ .container .cover .back{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+.cover .back{
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+}
+.container .cover::before,
+.container .cover::after{
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: #1ba7e3;
+  opacity: 0.5;
+  z-index: 12;
+}
+.container .cover::after{
+  opacity: 0.3;
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+}
+.container .cover img{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  z-index: 10;
+}
+.container .cover .text{
+  position: absolute;
+  z-index: 130;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.cover .text .text-1,
+.cover .text .text-2{
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+}
+.cover .text .text-2{
+  font-size: 45px;
+  font-weight: 500;
+}
+.form-content{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title{
+  position: relative;
+  font-size: 24px;
+  font-weight: 500;
+  color: #333;
+}
+.title:before{
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 45px;
+  background: #7d2ae8;
+}
+
+.input-boxes{
+  margin-top: 30px;
+}
+
+.input-box{
+  display: flex;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  margin: 10px 0;
+  position: relative;
+}
+
+.input-box input{
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  padding: 0 30px;
+  font-size: 16px;
+  font-weight: 500;
+  border-bottom: 2px solid rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.input-box input:focus,
+.input-box input:valid{
+  border-color: #1ba7e3;
+}
+
+.input-box i{
+  position: absolute;
+  color: #1ba7e3;
+  font-size: 17px;
+}
+
+
+.text{
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+ .text a{
+  text-decoration: none;
+}
+ .text a:hover{
+  text-decoration: underline;
+}
+ .button{
+  color: #fff;
+  margin-top: 30px;
+}
+
+ button {
+  color: #fff;
+  background: #1ba7e3;
+  border-radius: 6px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  width: 65%;
+  margin: 0px 10px;
+}
+
+button:hover{
+  background: #5b13b9;
+}
+
+@media (max-width: 730px) {
+  .container .cover{
+    display: none;
+  }
+ .login-form,
+   .signup-form{
+    width: 100%;
+  }
+   .signup-form{
+    display: none;
+  }
+  .container #flip:checked ~ .forms .signup-form{
+    display: block;
+  }
+  .container #flip:checked ~ .forms .login-form{
+    display: none;
+  }
+}
+
+
+
+    
+    </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="cover">
+              <div class="front">
+                <img src="images/frontImg.jpg" alt="">
+                <div class="text">
+                  <span class="text-1">Display your mood <br> the web3 way</span>
+                  <span id="moodDisplay" class="text-2"></span>
+                </div>
+              </div>
+            </div>
+            <div class="form-content">
+                <div class="login-form">
+                  <div class="title">Mood DApp</div>
+                  <div class="input-boxes">
+                <div class="input-box">
+                        <i class="far fa-meh-blank"></i>
+                         <input type="text" id="mood" placeholder="Input your mood">
+                </div>
+                <div class="button input-box">
+                    <button onclick="getMood()">Get Mood</button>
+                    <button onclick="setMood()">Set Mood</button>
+                </div>
+                <div class="text sign-up-text">Here we can set or get the mood <br><br> <small>Developed by Imam Abubakar</small></div>        
+                </div>
+            </div>
+        </div>
+    
+    
+       <script
+  src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+  type="application/javascript"
+       ></script>
+       <script>
+const MoodContractAddress = "0xD5e80808549743909FCB354C473B7C3Ede2247C0";
+  const MoodContractABI = [
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getMood",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_mood",
+				"type": "string"
+			}
+		],
+		"name": "setMood",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+];
+  let MoodContract;
+  let signer;
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum, "ropsten");
+  provider.send("eth_requestAccounts", []).then(() => {
+  provider.listAccounts().then((accounts) => {
+    signer = provider.getSigner(accounts[0]);
+    MoodContract = new ethers.Contract(
+      MoodContractAddress,
+      MoodContractABI,
+      signer
+    );
+  });
+});
+
+async function getMood() {
+  const getMoodPromise = MoodContract.getMood();
+  const Mood = await getMoodPromise;
+  document.getElementById("moodDisplay").innerHTML = Mood;
+}
+
+async function setMood() {
+  const mood = document.getElementById("mood").value;
+  const setMoodPromise = MoodContract.setMood(mood);
+  await setMoodPromise;
+}
+       </script>
+  </body>
+</html>
